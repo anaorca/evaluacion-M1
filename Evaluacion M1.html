@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad de Reflexión: Evaluación Justa con Rúbricas</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 1rem 0;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .reflection-section, .rubric-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .question {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .reflection-form textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-save {
+            background-color: var(--success-color);
+        }
+        
+        .btn-save:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-example {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-example:hover {
+            background-color: #c0392b;
+        }
+        
+        .example-response {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--dark-color);
+            display: none;
+        }
+        
+        .example-response h4 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .levels th {
+            background-color: var(--dark-color);
+            text-align: center;
+        }
+        
+        .criteria {
+            font-weight: bold;
+            background-color: var(--light-color);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+        
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .self-evaluation {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+        
+        .evaluation-criteria {
+            margin: 1rem 0;
+        }
+        
+        .evaluation-criteria label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .evaluation-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Módulo 1: Fundamentos de las Rúbricas Evaluativas</h1>
+            <p>Actividad de Reflexión: "Evaluación Justa con Rúbricas"</p>
+        </header>
+        
+        <section class="intro">
+            <h2>Actividad de Reflexión Individual</h2>
+            <p>Esta actividad te invita a reflexionar sobre tu experiencia con la evaluación y cómo las rúbricas pueden contribuir a una evaluación más justa. Tu reflexión será un insumo importante para tu aprendizaje en este módulo.</p>
+            <p><strong>Resultado de aprendizaje:</strong> Explica con tus propias palabras la definición de rúbrica, su diferencia con una lista de cotejo y su rol en la reducción de la subjetividad evaluativa.</p>
+        </section>
+        
+        <div class="content">
+            <section class="reflection-section">
+                <h2>Actividad de Reflexión</h2>
+                
+                <div class="question">
+                    <h3>Pregunta para reflexionar:</h3>
+                    <p>"Basado en tu experiencia, ¿Cuál crees que es el mayor obstáculo para una evaluación justa y cómo podría una rúbrica ayudar a superarlo?"</p>
+                </div>
+                
+                <div class="instructions">
+                    <p><strong>Instrucciones:</strong> Escribe tu reflexión en el cuadro de texto a continuación. Puedes guardar tu progreso y continuar más tarde si lo necesitas. Al finalizar, utiliza la rúbrica para autoevaluar tu reflexión.</p>
+                </div>
+                
+                <div class="reflection-form">
+                    <textarea id="reflection-text" placeholder="Escribe tu reflexión aquí..."></textarea>
+                    <button class="btn btn-save" id="save-reflection">Guardar mi reflexión</button>
+                    <button class="btn" id="clear-reflection">Limpiar texto</button>
+                    <button class="btn btn-example" id="show-example">Ver ejemplo de reflexión</button>
+                </div>
+                
+                <div class="example-response" id="example-response">
+                    <h4>Ejemplo de reflexión:</h4>
+                    <p>En mi experiencia como docente, considero que el mayor obstáculo para una evaluación justa es la falta de criterios explícitos y compartidos. Muchas veces, los profesores evaluamos basándonos en intuiciones o expectativas no verbalizadas, lo que genera inconsistencias entre diferentes evaluadores e incluso en nuestras propias evaluaciones a lo largo del tiempo.</p>
+                    <p>Una rúbrica ayuda a superar este obstáculo al hacer transparentes los criterios de evaluación y los niveles de desempeño esperados. A diferencia de una lista de cotejo que solo verifica la presencia o ausencia de elementos, una rúbrica describe cualitativamente los distintos niveles de calidad, lo que permite una evaluación más matizada y fundamentada.</p>
+                    <p>El rol de la rúbrica en la reducción de la subjetividad es crucial, ya que obliga al evaluador a justificar su valoración en relación con criterios preestablecidos, minimizando así la influencia de sesgos personales. Además, al ser conocida por los estudiantes desde el inicio, promueve la autoregulación del aprendizaje y fomenta una evaluación más formativa.</p>
+                </div>
+                
+                <div class="self-evaluation">
+                    <h3>Autoevaluación de tu reflexión</h3>
+                    <p>Utiliza la rúbrica de la derecha para evaluar tu propia reflexión:</p>
+                    
+                    <div class="evaluation-criteria">
+                        <label for="clarity">Claridad del argumento:</label>
+                        <select id="clarity">
+                            <option value="">Selecciona un nivel</option>
+                            <option value="1">Insuficiente (1-2 pts)</option>
+                            <option value="2">Satisfactorio (3-4 pts)</option>
+                            <option value="3">Excelente (5 pts)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="evaluation-criteria">
+                        <label for="connection">Conexión con la práctica:</label>
+                        <select id="connection">
+                            <option value="">Selecciona un nivel</option>
+                            <option value="1">Insuficiente (1-2 pts)</option>
+                            <option value="2">Satisfactorio (3-4 pts)</option>
+                            <option value="3">Excelente (5 pts)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="evaluation-criteria">
+                        <label for="contribution">Calidad de la reflexión:</label>
+                        <select id="contribution">
+                            <option value="">Selecciona un nivel</option>
+                            <option value="1">Insuficiente (1-2 pts)</option>
+                            <option value="2">Satisfactorio (3-4 pts)</option>
+                            <option value="3">Excelente (5 pts)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-save" id="evaluate">Evaluar mi reflexión</button>
+                    
+                    <div class="evaluation-result" id="evaluation-result">
+                        <h4>Resultado de tu autoevaluación:</h4>
+                        <p id="score-message"></p>
+                        <p id="feedback"></p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="rubric-section">
+                <h2>Rúbrica de Evaluación</h2>
+                <p>Esta rúbrica te servirá como guía para autoevaluar tu reflexión.</p>
+                
+                <table>
+                    <tr class="levels">
+                        <th width="25%">Criterios</th>
+                        <th width="25%">Insuficiente (1-2 pts)</th>
+                        <th width="25%">Satisfactorio (3-4 pts)</th>
+                        <th width="25%">Excelente (5 pts)</th>
+                    </tr>
+                    <tr>
+                        <td class="criteria">Claridad del argumento</td>
+                        <td>La reflexión es confusa, desorganizada o difícil de entender. No presenta una posición clara sobre el tema.</td>
+                        <td>La reflexión es comprensible pero podría ser más clara u organizada. Presenta una posición, pero con cierta ambigüedad.</td>
+                        <td>La reflexión es clara, bien organizada y fácil de seguir. Presenta una posición definida y coherente sobre el tema.</td>
+                    </tr>
+                    <tr>
+                        <td class="criteria">Conexión con la práctica</td>
+                        <td>No incluye referencias a experiencias prácticas o son irrelevantes para el argumento presentado.</td>
+                        <td>Menciona experiencias prácticas pero sin profundizar en su relación con el tema de reflexión.</td>
+                        <td>Integra efectivamente experiencias prácticas relevantes que enriquecen y fundamentan la reflexión presentada.</td>
+                    </tr>
+                    <tr>
+                        <td class="criteria">Calidad de la reflexión</td>
+                        <td>La reflexión es superficial o se limita a repetir conceptos sin aportar una perspectiva personal.</td>
+                        <td>Presenta algunas ideas válidas pero sin desarrollar completamente su potencial reflexivo.</td>
+                        <td>Demuestra una reflexión profunda, con ideas originales y bien fundamentadas que muestran comprensión del tema.</td>
+                    </tr>
+                </table>
+                
+                <div style="margin-top: 1.5rem;">
+                    <h3>Puntuación total:</h3>
+                    <p><strong>Insuficiente:</strong> 3-6 puntos - La reflexión necesita mayor desarrollo y profundidad.</p>
+                    <p><strong>Satisfactorio:</strong> 7-11 puntos - La reflexión cumple con lo esperado pero puede mejorarse.</p>
+                    <p><strong>Excelente:</strong> 12-15 puntos - La reflexión demuestra un análisis profundo y bien fundamentado.</p>
+                </div>
+                
+                <div style="margin-top: 1.5rem; background-color: #f0f8ff; padding: 1rem; border-radius: 4px;">
+                    <h3>Reflexión sobre la rúbrica</h3>
+                    <p>Observa cómo esta rúbrica:</p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Define claramente los criterios de evaluación</li>
+                        <li>Establece niveles de desempeño específicos</li>
+                        <li>Reduce la subjetividad al proporcionar descripciones detalladas</li>
+                        <li>Sirve como guía para la autoevaluación</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Curso Virtual: Rúbricas Evaluativas para Profesores - Módulo 1: Fundamentos</p>
+        </footer>
+    </div>
+
+    <script>
+        // Cargar reflexión guardada si existe
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedReflection = localStorage.getItem('reflectionText');
+            if (savedReflection) {
+                document.getElementById('reflection-text').value = savedReflection;
+            }
+        });
+
+        // Guardar reflexión
+        document.getElementById('save-reflection').addEventListener('click', function() {
+            const reflectionText = document.getElementById('reflection-text').value.trim();
+            
+            if (reflectionText === '') {
+                alert('Por favor, escribe tu reflexión antes de guardar.');
+                return;
+            }
+            
+            localStorage.setItem('reflectionText', reflectionText);
+            alert('¡Tu reflexión ha sido guardada exitosamente! Puedes continuar más tarde.');
+        });
+
+        // Limpiar texto
+        document.getElementById('clear-reflection').addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que quieres limpiar tu reflexión? Se perderá el texto no guardado.')) {
+                document.getElementById('reflection-text').value = '';
+                localStorage.removeItem('reflectionText');
+            }
+        });
+
+        // Mostrar ejemplo
+        document.getElementById('show-example').addEventListener('click', function() {
+            const exampleResponse = document.getElementById('example-response');
+            if (exampleResponse.style.display === 'block') {
+                exampleResponse.style.display = 'none';
+                this.textContent = 'Ver ejemplo de reflexión';
+            } else {
+                exampleResponse.style.display = 'block';
+                this.textContent = 'Ocultar ejemplo';
+            }
+        });
+
+        // Autoevaluación
+        document.getElementById('evaluate').addEventListener('click', function() {
+            const clarity = document.getElementById('clarity').value;
+            const connection = document.getElementById('connection').value;
+            const contribution = document.getElementById('contribution').value;
+            
+            if (!clarity || !connection || !contribution) {
+                alert('Por favor, selecciona un nivel para cada criterio antes de evaluar.');
+                return;
+            }
+            
+            // Calcular puntuación
+            const totalScore = parseInt(clarity) * 2 + parseInt(connection) * 2 + parseInt(contribution) * 2;
+            
+            // Determinar nivel
+            let level, message, feedback;
+            
+            if (totalScore >= 12) {
+                level = "Excelente";
+                message = "¡Felicidades! Tu reflexión demuestra un análisis profundo y bien fundamentado.";
+                feedback = "Has logrado integrar efectivamente tu experiencia personal con los conceptos teóricos, presentando una reflexión clara y bien organizada.";
+            } else if (totalScore >= 7) {
+                level = "Satisfactorio";
+                message = "Tu reflexión cumple con lo esperado, pero puedes mejorarla.";
+                feedback = "Considera profundizar en la conexión con tu experiencia práctica y desarrollar más tus argumentos para enriquecer tu reflexión.";
+            } else {
+                level = "Insuficiente";
+                message = "Tu reflexión necesita mayor desarrollo y profundidad.";
+                feedback = "Te recomendamos revisar los criterios de la rúbrica y ampliar tu reflexión, asegurándote de presentar una posición clara y conectar con experiencias prácticas relevantes.";
+            }
+            
+            // Mostrar resultado
+            document.getElementById('score-message').textContent = `Puntuación: ${totalScore}/15 - Nivel: ${level}. ${message}`;
+            document.getElementById('feedback').textContent = feedback;
+            document.getElementById('evaluation-result').style.display = 'block';
+            
+            // Desplazar hacia el resultado
+            document.getElementById('evaluation-result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
